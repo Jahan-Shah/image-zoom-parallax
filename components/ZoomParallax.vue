@@ -1,0 +1,151 @@
+<script setup>
+const mainContainer = ref(null);
+const el = ref(null);
+
+const pictures = [
+  {
+    src: "/images/1.jpeg",
+    scale: 4,
+  },
+  {
+    src: "/images/2.jpeg",
+    scale: 5,
+  },
+  {
+    src: "/images/3.jpg",
+    scale: 6,
+  },
+  {
+    src: "/images/4.jpg",
+    scale: 5,
+  },
+  {
+    src: "/images/5.jpg",
+    scale: 6,
+  },
+  {
+    src: "/images/6.jpg",
+    scale: 8,
+  },
+  {
+    src: "/images/7.jpeg",
+    scale: 9,
+  },
+];
+
+onMounted(() => {
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: mainContainer.value,
+      start: "top top",
+      end: "bottom bottom",
+      scrub: true,
+    },
+  });
+
+  pictures.forEach(({ scale }, index) => {
+    tl.to(el.value[index], {
+      scale: scale,
+    }, 0);
+  })
+});
+</script>
+
+<template>
+  <div ref="mainContainer" class="main__container">
+    <div class="sticky">
+      <div v-for="({ src }, index) in pictures" :key="index" ref="el" class="el">
+        <div class="imageContainer">
+          <NuxtImg class="h-full w-full" placeholder :src="src" alt="image" />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style lang="scss" scoped>
+.main__container {
+  height: 300vh;
+  position: relative;
+
+  .sticky {
+    position: sticky;
+    overflow: hidden;
+    top: 0;
+    height: 100vh;
+
+    .el {
+      width: 100%;
+      height: 100%;
+      top: 0;
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .imageContainer {
+        position: relative;
+        width: 25vw;
+        height: 25vh;
+
+        img {
+          object-fit: cover;
+        }
+      }
+
+      &:nth-of-type(2) {
+        .imageContainer {
+          top: -30vh;
+          left: 5vw;
+          width: 35vw;
+          height: 30vh;
+        }
+      }
+
+      &:nth-of-type(3) {
+        .imageContainer {
+          top: -10vh;
+          left: -25vw;
+          width: 20vw;
+          height: 45vh;
+        }
+      }
+
+      &:nth-of-type(4) {
+        .imageContainer {
+          left: 27.5vw;
+          width: 25vw;
+          height: 25vh;
+        }
+      }
+
+      &:nth-of-type(5) {
+        .imageContainer {
+          top: 27.5vh;
+          left: 5vw;
+          width: 20vw;
+          height: 25vh;
+        }
+      }
+
+      &:nth-of-type(6) {
+        .imageContainer {
+          top: 27.5vh;
+          left: -22.5vw;
+          width: 30vw;
+          height: 25vh;
+        }
+      }
+
+      &:nth-of-type(7) {
+        .imageContainer {
+          top: 22.5vh;
+          left: 25vw;
+          width: 15vw;
+          height: 15vh;
+        }
+      }
+    }
+  }
+}
+</style>
